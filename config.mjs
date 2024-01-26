@@ -98,12 +98,3 @@ function DetectFirmwareVersion()
 }
 
 export let target = DetectFirmwareVersion();
-
-export let fwScript = document.createElement('script');
-document.body.appendChild(fwScript);
-fwScript.onload = function () {
-    export let webkitScript = document.createElement('script');
-    webkitScript.setAttribute('src', `exploit.mjs`);
-    document.body.appendChild(webkitScript);
-};
-fwScript.setAttribute('src', `${fw_str}.mjs`);
