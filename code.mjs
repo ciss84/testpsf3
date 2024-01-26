@@ -1,5 +1,5 @@
         if {
-          90x.mjs  
+          loadScript("90x.mjs") 
         } else {
-          95x.mjs
+          loadScript("95x.mjs")
         }
