@@ -578,10 +578,10 @@ function test_rop(Chain) {
     chain.push_end();
 
     // The ROP chain is a noop. If we crashed, then we did something wrong.
-    //alert('chain run');
+    alert('chain run');
     debug_log('test call setjmp()/longjmp()');
     chain.run()
-    alert('ROP chain returned successfully');
+    alert('returned successfully');
     debug_log('ROP chain returned successfully');
     debug_log('jmp_buf:');
     debug_log(jmp_buf);
