@@ -232,7 +232,7 @@ function init_gadget_map(gadget_map, offset_map, base_addr) {
     }
 }
 
-class Chain903Base extends ChainBase {
+class Chain900Base extends ChainBase {
     constructor() {
         super();
 
@@ -476,7 +476,7 @@ class Chain903Base extends ChainBase {
 }
 
 // Chain for PS4 9.00
-class Chain903 extends Chain903Base {
+class Chain900 extends Chain900Base {
     constructor() {
         super();
 
@@ -538,7 +538,7 @@ class Chain903 extends Chain903Base {
         this.webcore_ta.write64(1, this.old_vtable_p);
     }
 }
-const Chain = Chain903;
+const Chain = Chain900;
 
 function init(Chain) {
     [libwebkit_base, libkernel_base, libc_base] = get_bases();
@@ -578,11 +578,11 @@ function test_rop(Chain) {
     chain.push_end();
 
     // The ROP chain is a noop. If we crashed, then we did something wrong.
-    alert('chain run');
+    //alert('chain run');
     debug_log('test call setjmp()/longjmp()');
     chain.run()
-    alert('returned successfully');
-    debug_log('returned successfully');
+    alert('ROP chain returned successfully');
+    debug_log('ROP chain returned successfully');
     debug_log('jmp_buf:');
     debug_log(jmp_buf);
     debug_log(`flag: ${rw.read64(chain.flag, 0)}`);
@@ -666,5 +666,5 @@ function test_rop(Chain) {
     }
 }
 
-debug_log('Chain903');
+debug_log('Chain900');
 test_rop(Chain);
