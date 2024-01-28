@@ -688,3 +688,6 @@ function test_rop(Chain) {
         die('syscall getuid failed');
     }
 }
+
+debug_log('Chain900');
+test_rop(Chain);
