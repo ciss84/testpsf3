@@ -71,16 +71,16 @@ function DetectFirmwareVersion()
         return ps4_6_50;
     }
 
-    if (UA == "7.01" || UA == "7.02" || UA == "7.50" || UA == "7.51" || UA == "7.55" || UA == "8.00" || UA == "8.01" || UA == "8.03" || UA == "8.50")
+    if (UA == "7.01" || UA == "7.02" || UA == "7.50" || UA == "7.51" || UA == "7.55" || UA == "8.00" || UA == "8.01" || UA == "8.03" || UA == "8.50" || UA == "8.51")
     {
         return ps4_8_03;
     }
     
-    //on 9.00 Fw deection changed to laysation insead of regular Playsation
+    //on 9.00 Fw deection changed to laystation insead of regular Playstation
     UA = navigator.userAgent.substring(navigator.userAgent.indexOf('5.0 (') + 19, navigator.userAgent.indexOf(') Apple')).replace("layStation 4/","");
 
 
-    if (UA == "9.00" || UA == "9.03" || UA == "9.04" || UA == "9.50" || UA == "9.60")
+    if (UA == "9.00" || UA == "9.03" || UA == "9.04" || UA == "9.50" ||  UA == "9.51" || UA == "9.60")
     {
         return ps4_9_00;
     }
