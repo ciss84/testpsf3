@@ -33,6 +33,7 @@ export const ps4_8_03 = 1;
 export const ps4_9_00 = 2;
 export const ps4_9_03 = ps4_9_00;
 export const ps4_9_04 = ps4_9_00;
+export const ps4_10_50 = ps4_9_00;
 
 // version 9.xx is for ps5 1.xx-5.xx as well
 export const ps5_5_00 = ps4_9_00;
@@ -82,7 +83,7 @@ function DetectFirmwareVersion()
     UA = navigator.userAgent.substring(navigator.userAgent.indexOf('5.0 (') + 19, navigator.userAgent.indexOf(') Apple')).replace("layStation 4/","");
 
 
-    if (UA == "9.00" || UA == "9.03" || UA == "9.04" || UA == "9.50" ||  UA == "9.51" || UA == "9.60")
+    if (UA == "9.00" || UA == "9.03" || UA == "9.04" || UA == "9.50" ||  UA == "9.51" || UA == "9.60" || UA == "10.50")
     {
         return ps4_9_00;
     }
